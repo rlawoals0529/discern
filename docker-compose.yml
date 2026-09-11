@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: discern
+      POSTGRES_PASSWORD: discern
+      POSTGRES_DB: discern
+    ports: ["5434:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U discern"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    tmpfs:
+      # Run history is worth keeping on a real deployment and worth nothing locally, where
+      # every test truncates it anyway. Durability here costs a disk sync per test run.
+      - /var/lib/postgresql/data

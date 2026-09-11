@@ -85,11 +85,52 @@ results = run_items(items, my_runner, label="prompt-a")
 Raising is how a runner says it could not get an answer. That becomes an errored item, not a
 failed one.
 
+## Keeping the history
+
+A single run is a command line concern. "Did this get better since last week" is not, and it
+is the question people actually have, so runs can be stored.
+
+```bash
+docker compose up -d --wait
+uv run alembic upgrade head
+DISCERN_TOKEN=$(openssl rand -hex 16) uv run uvicorn discern.service.app:app --port 8210
+```
+
+```
+POST /runs                 store a run
+GET  /runs?suite=...       history, newest first
+GET  /runs/{id}            one run, with its items
+GET  /compare/{a}/{b}      the same verdict the CLI gives
+```
+
+**The three outcomes are stored, not a pass rate.** Storing the rate would make the errored
+and skipped items unrecoverable, and every honest thing this tool says depends on still being
+able to tell those apart. The rate is derived on the way out.
+
+**Every endpoint needs a bearer token**, because a stored run holds the prompts that were
+evaluated and often, through the error strings, what the model said about them. With
+`DISCERN_TOKEN` unset the service refuses everything with a 503 rather than allowing
+everything: an unset variable is a deployment somebody did not finish, and the safe reading of
+that is closed. It is one token and not a user table, because there is one person here and
+roles would be a mechanism invented for a problem this does not have.
+
+**Two runs of different suites are refused rather than paired.** Two suites can share item ids
+by coincidence, and pairing on those is a comparison of unrelated things wearing the shape of
+a real one.
+
 ## Tests
 
 ```bash
+docker compose up -d --wait
+uv run alembic upgrade head
 uv run pytest
 ```
+
+Sixty-one tests. The service ones run against **real Postgres**, because what they are testing
+is a schema: a unique constraint, timezone-aware timestamps, and a migration that has to be
+right. An in-memory stand-in exercises none of those, so testing the fake would prove nothing
+about the thing that ships. `alembic check` runs as its own CI job, because "the migration has
+drifted from the models" and "a test failed" are different problems.
 
 The statistics are checked two ways, because neither alone is enough. Hand-computable cases
 catch a wrong formula: exact McNemar on three disagreements all one way must be 2·(1/2)³ =
@@ -103,6 +144,8 @@ The continuity-correction bug above was found by that grid, not by writing the c
 
 ## Stack
 
-Python 3.11+ · pytest · ruff · uv · no runtime dependency on any model provider
+Python 3.11+ · FastAPI · SQLAlchemy 2 · PostgreSQL 17 · Alembic · pytest · ruff · uv
+
+No runtime dependency on any model provider, enforced by `scripts/check_no_provider.py`.
 
 MIT © James Kim

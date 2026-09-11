@@ -9,12 +9,51 @@ jobs:
     strategy:
       matrix:
         python: ["3.11", "3.12", "3.13"]
+    services:
+      # A real Postgres, because the service tests are about a schema: a unique constraint,
+      # timezone-aware timestamps and a migration that has to be right. An in-memory stand-in
+      # would exercise none of those, so testing the fake would prove nothing.
+      db:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: discern
+          POSTGRES_PASSWORD: discern
+          POSTGRES_DB: discern
+        ports: ["5434:5432"]
+        options: >-
+          --health-cmd "pg_isready -U discern"
+          --health-interval 2s --health-timeout 3s --health-retries 20
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
       - run: uv sync --python ${{ matrix.python }}
-      - run: uv run ruff check src tests
+      - run: uv run ruff check src tests scripts
+      - run: uv run alembic upgrade head
       - run: uv run pytest -q
+
+  # Its own job, because "the migration does not match the models" and "a test failed" are
+  # different problems and only one of them is about the code you just wrote. `alembic check`
+  # fails when the schema a migration produces has drifted from the models, which is how a
+  # model change ships without the migration that goes with it.
+  migration:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: discern
+          POSTGRES_PASSWORD: discern
+          POSTGRES_DB: discern
+        ports: ["5434:5432"]
+        options: >-
+          --health-cmd "pg_isready -U discern"
+          --health-interval 2s --health-timeout 3s --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      - run: uv run alembic upgrade head
+      - run: uv run alembic check
 
   # Its own job so the reason a run went red is legible from the job list rather than from a
   # log: "the core grew a provider dependency" and "tests failed" are different problems.

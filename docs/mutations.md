@@ -19,6 +19,12 @@ The method: back the file up, apply the change, `uv run pytest -q`, restore.
 | `outcome.py`: allow an errored item with no reason | "an error without a reason is refused" |
 | `suite.py`: allow a duplicate item id | "a duplicate id is refused because it breaks pairing" |
 | `report.py`: print the difference as a winner regardless of the verdict | "a ten point difference over twenty items is not a result" |
+| `service/auth.py`: use `==` instead of `compare_digest` | "the token check does not leak the token one byte at a time" |
+| `service/auth.py`: allow requests when `DISCERN_TOKEN` is unset | "with no token configured it refuses everything rather than everyone" |
+| `service/app.py`: return NaN rather than null for an unpairable comparison | "an unpairable comparison returns null rather than nan" |
+| `service/app.py`: compare two suites instead of refusing | "two runs of different suites are refused rather than paired" |
+| `service/app.py`: compute a rate in the service instead of calling `compare` | "the service and the library cannot disagree" |
+| `service/models.py`: drop the unique constraint on (run_id, item_id) | "a duplicate item id is refused" |
 
 ## The one the grid caught and a chosen value could not
 

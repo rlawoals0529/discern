@@ -38,6 +38,13 @@ dev = [
 [tool.ruff]
 line-length = 100
 
+[tool.ruff.lint]
+# B008 fires on `Depends(...)` in argument defaults, which is FastAPI's documented idiom
+# rather than a bug: the framework reads those defaults to build the dependency graph.
+# Configured here rather than as an inline ignore on every route, because a project-level
+# rule is visible and a scattering of noqa comments is not.
+extend-ignore = ["B008"]
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 pythonpath = ["src"]
