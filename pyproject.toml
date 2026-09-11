@@ -1,0 +1,43 @@
+[project]
+name = "discern"
+version = "0.1.0"
+description = "An eval harness that will not call a difference it cannot see."
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "sqlalchemy>=2.0.36",
+    "psycopg[binary]>=3.2",
+    "alembic>=1.14",
+    "pydantic>=2.10",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+discern = "discern.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/discern"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.8",
+    # An independent implementation to check the statistics against. Dev only, and the
+    # reason it is here rather than in `dependencies` is that shipping it would mean this
+    # tool's answers came from it: the point is to have two implementations that agree.
+    "statsmodels>=0.14",
+    "httpx>=0.28",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+pythonpath = ["src"]

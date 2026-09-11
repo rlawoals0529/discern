@@ -1,0 +1,44 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --python ${{ matrix.python }}
+      - run: uv run ruff check src tests
+      - run: uv run pytest -q
+
+  # Its own job so the reason a run went red is legible from the job list rather than from a
+  # log: "the core grew a provider dependency" and "tests failed" are different problems.
+  #
+  # The core must import no model provider. That is what lets the whole suite run in CI with
+  # no key and no network, and a harness whose own tests cannot run is in no position to
+  # lecture anybody about evidence.
+  deps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      - run: uv run python scripts/check_no_provider.py
+
+  # The commands the README tells a stranger to run. A front page whose first command fails
+  # is worse than a front page with no commands on it.
+  readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      - run: |
+          uv run discern run examples/arithmetic.yaml --label prompt-a --fail add-3 div-2 --out a.json
+          uv run discern run examples/arithmetic.yaml --label prompt-b --fail add-3 --out b.json
+          uv run discern compare a.json b.json
