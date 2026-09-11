@@ -16,7 +16,7 @@ indistinguishable from noise at this sample size, p = 0.5000 (mcnemar-exact)
 Ten points looks like a result. Two items separated the runs, which settles nothing, and the
 report says so and says what would settle it.
 
-## What it refuses to do
+## What it will not report
 
 - **It never prints a bare percentage.** Every rate carries its interval.
 - **It never calls a winner the test cannot support.** It says how many items would.
@@ -25,7 +25,7 @@ report says so and says what would settle it.
 - **It never compares two runs over different items without saying so**, and it reports no
   p-value for them at all, because a comparison over different items is a different question.
 
-## The three statistical choices, and what each one beats
+## Why Wilson and McNemar
 
 A tool whose argument is that eval reports produce confident wrong numbers has no licence to
 produce one. Each of these is the less obvious of two, and each is checked in `tests/` against
