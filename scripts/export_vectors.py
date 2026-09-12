@@ -15,7 +15,16 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 from pathlib import Path
+
+# Imported from src/, not from whatever is installed.
+#
+# `uv run` resolves `discern` to the built package in the environment, which is a copy
+# made at sync time. Editing stats.py and regenerating then produces the OLD answers, and the
+# drift check compares the committed vectors against a build nobody is looking at. The point
+# of this file is to capture what the working tree computes, so it says which tree.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from discern.stats import (
     Discordance,
@@ -79,7 +88,9 @@ for both, only_a, only_b, neither in TABLES:
         }
     )
 
-out = Path("site/vectors.json")
+# An argument so the drift check can generate into a scratch directory: a check that
+# rewrote the file it is checking would make the next run pass for the wrong reason.
+out = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("site/vectors.json")
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps(vectors, indent=2) + "\n")
 
