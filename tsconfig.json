@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "outDir": "site",
+    "rootDir": "site",
+    "types": []
+  },
+  "include": ["site"],
+  "exclude": ["site/lib/*.test.ts", "site/*.test.ts"]
+}

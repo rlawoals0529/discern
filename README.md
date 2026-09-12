@@ -16,6 +16,24 @@ indistinguishable from noise at this sample size, p = 0.5000 (mcnemar-exact)
 Ten points looks like a result. Two items separated the runs, which settles nothing, and the
 report says so and says what would settle it.
 
+## Try it without installing anything
+
+**[rlawoals0529.github.io/discern](https://rlawoals0529.github.io/discern/)** - enter what
+two runs agreed and disagreed on, get the same report
+
+The page runs a TypeScript port of `src/discern/stats.py`, and a port of a statistic is a
+second implementation that drifts. So it is not trusted on its own account:
+`scripts/export_vectors.py` runs the **Python** over a spread of inputs - including n = 0,
+100 per cent, discordant counts small enough to be exact and large enough to overflow a
+double - and writes the answers to `site/vectors.json`. The port is tested against those, and
+CI regenerates the file with Python and fails if it has moved, so the vectors cannot quietly
+become whatever the port happens to produce. The page reproduces the run printed at the top
+of this README, figure for figure, which is the end of the argument.
+
+One thing is not a transcription: JavaScript has no `erf`, so the port reimplements one out
+of two standard expansions. That is why the vectors include `erf` and `erfc` out into the
+tail, where a chi-square upper tail is made of them.
+
 ## What it will not report
 
 - **It never prints a bare percentage.** Every rate carries its interval.

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>discern - a difference you cannot see is not a result</title>
+<meta name="description" content="Enter what two eval runs agreed and disagreed on, and see whether the difference between them is distinguishable from noise, and how many items would settle it.">
+<link rel="stylesheet" href="./theme/palettes.css">
+<link rel="stylesheet" href="./theme/base.css">
+<link rel="stylesheet" href="./theme/layout-flat.css">
+<link rel="stylesheet" href="./theme/type.css">
+<link rel="stylesheet" href="./theme/texture.css">
+<link rel="stylesheet" href="./style.css">
+<script>
+  (function () {
+    var t;
+    try { t = localStorage.getItem("discern:theme"); } catch (e) {}
+    document.documentElement.setAttribute("data-theme", t || "twilight-comet");
+  })();
+</script>
+</head>
+<body class="grain">
+<div class="wrap">
+  <h1>dis<span>cern</span></h1>
+  <p class="tagline">
+    Ten points looks like a result. Whether it is one depends on how many items actually
+    separated the two runs, and usually that is a much smaller number than anyone expects.
+  </p>
+
+  <section class="panel">
+    <h2>What the two runs did</h2>
+    <p class="note">
+      Every item, sorted into the four things that can happen to it. Only the middle two can
+      separate the runs: an item they both passed, or both failed, says nothing about which
+      is better, however many of them there are.
+    </p>
+    <div class="cells">
+      <label class="cell"><span>Both passed</span><input type="number" id="both" min="0" value="16"></label>
+      <label class="cell can"><span>Only A passed</span><input type="number" id="onlyA" min="0" value="0"></label>
+      <label class="cell can"><span>Only B passed</span><input type="number" id="onlyB" min="0" value="2"></label>
+      <label class="cell"><span>Neither passed</span><input type="number" id="neither" min="0" value="2"></label>
+    </div>
+    <p class="note" id="shape"></p>
+  </section>
+
+  <section class="panel">
+    <h2>The report</h2>
+    <div class="rates" id="rates"></div>
+    <p class="verdict" id="verdict"></p>
+    <p class="note" id="settle"></p>
+    <p class="note caution">
+      <b>The bands are not the test.</b> Two intervals overlapping does not mean the runs are
+      the same, and two that miss does not mean they differ - both are common at these sizes.
+      The verdict comes from the items that disagreed, which is what a paired test looks at.
+    </p>
+  </section>
+
+  <div id="palette-host"></div>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

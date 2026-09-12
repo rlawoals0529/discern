@@ -4,3 +4,11 @@ __pycache__/
 .pytest_cache/
 dist/
 .DS_Store
+
+# The page is compiled beside its source so it needs no bundler; only the TypeScript is
+# committed. site/vectors.json is generated too but IS committed - it is the Python's
+# answers, and CI regenerates it to check the port has not drifted from them.
+node_modules/
+site/**/*.js
+test-results/
+playwright-report/

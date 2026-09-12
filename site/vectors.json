@@ -1,0 +1,589 @@
+{
+  "z95": 1.959963984540054,
+  "wilson": [
+    {
+      "successes": 0,
+      "n": 0,
+      "expected": {
+        "point": 0.0,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 0
+      }
+    },
+    {
+      "successes": 0,
+      "n": 1,
+      "expected": {
+        "point": 0.0,
+        "low": 0.0,
+        "high": 0.7934506856227626,
+        "n": 1
+      }
+    },
+    {
+      "successes": 1,
+      "n": 1,
+      "expected": {
+        "point": 1.0,
+        "low": 0.20654931437723745,
+        "high": 1.0,
+        "n": 1
+      }
+    },
+    {
+      "successes": 0,
+      "n": 20,
+      "expected": {
+        "point": 0.0,
+        "low": 0.0,
+        "high": 0.16112515805281938,
+        "n": 20
+      }
+    },
+    {
+      "successes": 20,
+      "n": 20,
+      "expected": {
+        "point": 1.0,
+        "low": 0.8388748419471806,
+        "high": 1.0,
+        "n": 20
+      }
+    },
+    {
+      "successes": 1,
+      "n": 20,
+      "expected": {
+        "point": 0.05,
+        "low": 0.008881448800795402,
+        "high": 0.23613119344674205,
+        "n": 20
+      }
+    },
+    {
+      "successes": 16,
+      "n": 20,
+      "expected": {
+        "point": 0.8,
+        "low": 0.5839825677481065,
+        "high": 0.9193423374202019,
+        "n": 20
+      }
+    },
+    {
+      "successes": 18,
+      "n": 20,
+      "expected": {
+        "point": 0.9,
+        "low": 0.6989663547715128,
+        "high": 0.9721335187862319,
+        "n": 20
+      }
+    },
+    {
+      "successes": 1,
+      "n": 3,
+      "expected": {
+        "point": 0.3333333333333333,
+        "low": 0.06149194472039615,
+        "high": 0.7923403991979523,
+        "n": 3
+      }
+    },
+    {
+      "successes": 50,
+      "n": 100,
+      "expected": {
+        "point": 0.5,
+        "low": 0.4038315303659956,
+        "high": 0.5961684696340044,
+        "n": 100
+      }
+    },
+    {
+      "successes": 99,
+      "n": 100,
+      "expected": {
+        "point": 0.99,
+        "low": 0.9455138038212946,
+        "high": 0.9982325679358593,
+        "n": 100
+      }
+    },
+    {
+      "successes": 1,
+      "n": 1000,
+      "expected": {
+        "point": 0.001,
+        "low": 0.00017654637062607852,
+        "high": 0.0056425585979579355,
+        "n": 1000
+      }
+    },
+    {
+      "successes": 999,
+      "n": 1000,
+      "expected": {
+        "point": 0.999,
+        "low": 0.9943574414020421,
+        "high": 0.9998234536293739,
+        "n": 1000
+      }
+    },
+    {
+      "successes": 500,
+      "n": 1000,
+      "expected": {
+        "point": 0.5,
+        "low": 0.4690696003681042,
+        "high": 0.5309303996318958,
+        "n": 1000
+      }
+    }
+  ],
+  "wald": [
+    {
+      "successes": 0,
+      "n": 0,
+      "expected": {
+        "point": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 0
+      }
+    },
+    {
+      "successes": 0,
+      "n": 1,
+      "expected": {
+        "point": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 1
+      }
+    },
+    {
+      "successes": 1,
+      "n": 1,
+      "expected": {
+        "point": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 1
+      }
+    },
+    {
+      "successes": 0,
+      "n": 20,
+      "expected": {
+        "point": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 20
+      }
+    },
+    {
+      "successes": 20,
+      "n": 20,
+      "expected": {
+        "point": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 20
+      }
+    },
+    {
+      "successes": 1,
+      "n": 20,
+      "expected": {
+        "point": 0.05,
+        "low": -0.04551682940272121,
+        "high": 0.1455168294027212,
+        "n": 20
+      }
+    },
+    {
+      "successes": 16,
+      "n": 20,
+      "expected": {
+        "point": 0.8,
+        "low": 0.6246954918846838,
+        "high": 0.9753045081153163,
+        "n": 20
+      }
+    },
+    {
+      "successes": 18,
+      "n": 20,
+      "expected": {
+        "point": 0.9,
+        "low": 0.7685216189135128,
+        "high": 1.0314783810864872,
+        "n": 20
+      }
+    },
+    {
+      "successes": 1,
+      "n": 3,
+      "expected": {
+        "point": 0.3333333333333333,
+        "low": -0.20010129737281218,
+        "high": 0.8667679640394788,
+        "n": 3
+      }
+    },
+    {
+      "successes": 50,
+      "n": 100,
+      "expected": {
+        "point": 0.5,
+        "low": 0.4020018007729973,
+        "high": 0.5979981992270027,
+        "n": 100
+      }
+    },
+    {
+      "successes": 99,
+      "n": 100,
+      "expected": {
+        "point": 0.99,
+        "low": 0.9704986045820121,
+        "high": 1.009501395417988,
+        "n": 100
+      }
+    },
+    {
+      "successes": 1,
+      "n": 1000,
+      "expected": {
+        "point": 0.001,
+        "low": -0.0009589837574297115,
+        "high": 0.0029589837574297115,
+        "n": 1000
+      }
+    },
+    {
+      "successes": 999,
+      "n": 1000,
+      "expected": {
+        "point": 0.999,
+        "low": 0.9970410162425702,
+        "high": 1.0009589837574298,
+        "n": 1000
+      }
+    },
+    {
+      "successes": 500,
+      "n": 1000,
+      "expected": {
+        "point": 0.5,
+        "low": 0.4690102483847719,
+        "high": 0.5309897516152281,
+        "n": 1000
+      }
+    }
+  ],
+  "mcnemar": [
+    {
+      "table": {
+        "both": 0,
+        "onlyA": 0,
+        "onlyB": 0,
+        "neither": 0
+      },
+      "expected": {
+        "p": 1.0,
+        "method": "mcnemar-exact"
+      }
+    },
+    {
+      "table": {
+        "both": 18,
+        "onlyA": 0,
+        "onlyB": 2,
+        "neither": 0
+      },
+      "expected": {
+        "p": 0.5,
+        "method": "mcnemar-exact"
+      }
+    },
+    {
+      "table": {
+        "both": 10,
+        "onlyA": 5,
+        "onlyB": 5,
+        "neither": 10
+      },
+      "expected": {
+        "p": 1.0,
+        "method": "mcnemar-exact"
+      }
+    },
+    {
+      "table": {
+        "both": 10,
+        "onlyA": 0,
+        "onlyB": 10,
+        "neither": 10
+      },
+      "expected": {
+        "p": 0.001953125,
+        "method": "mcnemar-exact"
+      }
+    },
+    {
+      "table": {
+        "both": 100,
+        "onlyA": 30,
+        "onlyB": 12,
+        "neither": 100
+      },
+      "expected": {
+        "p": 0.007915897334896727,
+        "method": "mcnemar-exact"
+      }
+    },
+    {
+      "table": {
+        "both": 0,
+        "onlyA": 1,
+        "onlyB": 0,
+        "neither": 0
+      },
+      "expected": {
+        "p": 1.0,
+        "method": "mcnemar-exact"
+      }
+    },
+    {
+      "table": {
+        "both": 0,
+        "onlyA": 0,
+        "onlyB": 1,
+        "neither": 0
+      },
+      "expected": {
+        "p": 1.0,
+        "method": "mcnemar-exact"
+      }
+    },
+    {
+      "table": {
+        "both": 500,
+        "onlyA": 1,
+        "onlyB": 1,
+        "neither": 500
+      },
+      "expected": {
+        "p": 1.0,
+        "method": "mcnemar-exact"
+      }
+    },
+    {
+      "table": {
+        "both": 0,
+        "onlyA": 40,
+        "onlyB": 10,
+        "neither": 0
+      },
+      "expected": {
+        "p": 2.3861331676755526e-05,
+        "method": "mcnemar-exact"
+      }
+    },
+    {
+      "table": {
+        "both": 2000,
+        "onlyA": 60,
+        "onlyB": 40,
+        "neither": 2000
+      },
+      "expected": {
+        "p": 0.05688793364098079,
+        "method": "mcnemar-exact"
+      }
+    }
+  ],
+  "paired_n_needed": [
+    {
+      "p_discordant": 0.1,
+      "effect": 0.05,
+      "expected": 312
+    },
+    {
+      "p_discordant": 0.2,
+      "effect": 0.1,
+      "expected": 155
+    },
+    {
+      "p_discordant": 0.5,
+      "effect": 0.25,
+      "expected": 61
+    },
+    {
+      "p_discordant": 0.05,
+      "effect": 0.01,
+      "expected": 3923
+    },
+    {
+      "p_discordant": 0.3,
+      "effect": 0.0,
+      "expected": null
+    },
+    {
+      "p_discordant": 0.0,
+      "effect": 0.1,
+      "expected": null
+    },
+    {
+      "p_discordant": 0.99,
+      "effect": 0.5,
+      "expected": 29
+    }
+  ],
+  "unpaired_n_needed": [
+    {
+      "p1": 0.8,
+      "p2": 0.9,
+      "expected": 199
+    },
+    {
+      "p1": 0.5,
+      "p2": 0.5,
+      "expected": null
+    },
+    {
+      "p1": 0.01,
+      "p2": 0.02,
+      "expected": 2319
+    },
+    {
+      "p1": 0.5,
+      "p2": 0.99,
+      "expected": 12
+    },
+    {
+      "p1": 0.9,
+      "p2": 0.8,
+      "expected": 199
+    }
+  ],
+  "erf": [
+    {
+      "x": 0.0,
+      "expected": 0.0
+    },
+    {
+      "x": 0.1,
+      "expected": 0.1124629160182849
+    },
+    {
+      "x": 0.5,
+      "expected": 0.5204998778130465
+    },
+    {
+      "x": 1.0,
+      "expected": 0.8427007929497148
+    },
+    {
+      "x": 1.5,
+      "expected": 0.9661051464753108
+    },
+    {
+      "x": 1.9,
+      "expected": 0.9927904292352574
+    },
+    {
+      "x": 2.0,
+      "expected": 0.9953222650189527
+    },
+    {
+      "x": 2.1,
+      "expected": 0.997020533343667
+    },
+    {
+      "x": 3.0,
+      "expected": 0.9999779095030015
+    },
+    {
+      "x": 4.0,
+      "expected": 0.9999999845827421
+    },
+    {
+      "x": 5.0,
+      "expected": 0.9999999999984626
+    },
+    {
+      "x": 5.9,
+      "expected": 1.0
+    },
+    {
+      "x": -0.5,
+      "expected": -0.5204998778130465
+    },
+    {
+      "x": -2.5,
+      "expected": -0.999593047982555
+    }
+  ],
+  "erfc": [
+    {
+      "x": 0.0,
+      "expected": 1.0
+    },
+    {
+      "x": 0.1,
+      "expected": 0.8875370839817152
+    },
+    {
+      "x": 0.5,
+      "expected": 0.4795001221869535
+    },
+    {
+      "x": 1.0,
+      "expected": 0.15729920705028516
+    },
+    {
+      "x": 1.5,
+      "expected": 0.033894853524689274
+    },
+    {
+      "x": 1.9,
+      "expected": 0.007209570764742534
+    },
+    {
+      "x": 2.0,
+      "expected": 0.0046777349810472645
+    },
+    {
+      "x": 2.1,
+      "expected": 0.0029794666563329845
+    },
+    {
+      "x": 3.0,
+      "expected": 2.2090496998585438e-05
+    },
+    {
+      "x": 4.0,
+      "expected": 1.541725790028002e-08
+    },
+    {
+      "x": 5.0,
+      "expected": 1.537459794428035e-12
+    },
+    {
+      "x": 5.9,
+      "expected": 7.190409783550476e-17
+    },
+    {
+      "x": -0.5,
+      "expected": 1.5204998778130465
+    },
+    {
+      "x": -2.5,
+      "expected": 1.999593047982555
+    }
+  ]
+}
