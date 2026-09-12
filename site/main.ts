@@ -19,7 +19,7 @@ import {
   type Discordance,
   type Interval,
 } from "./stats.js";
-import { createThemeStore, grouped, type Theme } from "./lib/theme.js";
+import { createThemeStore, DEFAULT_THEME, grouped, type Theme } from "./lib/theme.js";
 import { wirePalette } from "./lib/palette-keys.js";
 
 const field = (id: string) => document.getElementById(id) as HTMLInputElement;
