@@ -8,7 +8,8 @@ implementation of the statistics here and there must never be one.
 
 from __future__ import annotations
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Query, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -20,24 +21,54 @@ from .auth import require_token
 from .db import get_db
 from .models import Result, Run
 
+MAX_REQUEST_BYTES = 4 * 1024 * 1024
+MAX_RESULTS_PER_RUN = 10_000
+
 app = FastAPI(
     title="discern",
     version="0.1.0",
     description="Stored eval runs, and whether two of them can be told apart.",
 )
 
+_SECURITY_HEADERS = {
+    "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'",
+    "Cross-Origin-Resource-Policy": "same-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+    "Referrer-Policy": "no-referrer",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+}
+
+
+@app.middleware("http")
+async def security_boundary(request: Request, call_next):
+    raw_length = request.headers.get("content-length")
+    if raw_length:
+        try:
+            if int(raw_length) > MAX_REQUEST_BYTES:
+                return JSONResponse({"detail": "Request body is too large."}, status_code=413)
+        except ValueError:
+            return JSONResponse({"detail": "Invalid Content-Length header."}, status_code=400)
+
+    response = await call_next(request)
+    for name, value in _SECURITY_HEADERS.items():
+        response.headers[name] = value
+    response.headers["Cache-Control"] = "no-store"
+    return response
+
 
 class ResultIn(BaseModel):
-    item_id: str
+    item_id: str = Field(min_length=1, max_length=500)
     outcome: Outcome
-    error: str | None = None
-    duration_ms: int | None = None
+    error: str | None = Field(default=None, max_length=20_000)
+    duration_ms: int | None = Field(default=None, ge=0, le=86_400_000)
 
 
 class RunIn(BaseModel):
     label: str = Field(min_length=1, max_length=200)
     suite: str = Field(min_length=1, max_length=200)
-    results: list[ResultIn] = Field(min_length=1)
+    results: list[ResultIn] = Field(min_length=1, max_length=MAX_RESULTS_PER_RUN)
 
 
 def _to_data(run: Run) -> RunData:
@@ -79,9 +110,6 @@ def _rate(run: RunData) -> dict:
 def create_run(body: RunIn, db: Session = Depends(get_db)) -> dict:
     seen = {r.item_id for r in body.results}
     if len(seen) != len(body.results):
-        # Refused here as well as in the suite loader, because a run can arrive over HTTP
-        # without ever passing through one. A duplicate id makes an item invisible to the
-        # paired comparison, silently.
         raise HTTPException(422, "An item id appears twice in this run, which breaks pairing.")
 
     run = Run(label=body.label, suite=body.suite)
@@ -100,8 +128,12 @@ def create_run(body: RunIn, db: Session = Depends(get_db)) -> dict:
 
 
 @app.get("/runs", dependencies=[Depends(require_token)])
-def list_runs(suite: str | None = None, limit: int = 50, db: Session = Depends(get_db)) -> dict:
-    stmt = select(Run).order_by(Run.created_at.desc()).limit(min(limit, 200))
+def list_runs(
+    suite: str | None = Query(default=None, max_length=200),
+    limit: int = Query(default=50, ge=1, le=200),
+    db: Session = Depends(get_db),
+) -> dict:
+    stmt = select(Run).order_by(Run.created_at.desc()).limit(limit)
     if suite:
         stmt = stmt.where(Run.suite == suite)
     runs = db.scalars(stmt).all()
@@ -144,9 +176,6 @@ def compare_runs(a_id: int, b_id: int, db: Session = Depends(get_db)) -> dict:
         raise HTTPException(404, f"No run with id {' or '.join(map(str, missing))}.")
 
     if a.suite != b.suite:
-        # Said rather than attempted. Two different suites may share item ids by coincidence,
-        # and pairing on those would be a comparison of unrelated things wearing the shape of
-        # a real one.
         raise HTTPException(
             422,
             f"Run {a_id} is over suite {a.suite!r} and run {b_id} is over {b.suite!r}. "
@@ -159,7 +188,6 @@ def compare_runs(a_id: int, b_id: int, db: Session = Depends(get_db)) -> dict:
         "a": {"id": a.id, "label": a.label, **_rate(_to_data(a))},
         "b": {"id": b.id, "label": b.label, **_rate(_to_data(b))},
         "separated": verdict.separated,
-        # None rather than NaN, which is not valid JSON and which some clients turn into 0.
         "p_value": None if verdict.p_value != verdict.p_value else verdict.p_value,
         "method": verdict.method,
         "paired": verdict.paired,
